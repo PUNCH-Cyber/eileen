@@ -13,5 +13,5 @@ cp eileen-config ~/.bigtime
 ./eileen.py
 ```
 
-We run Eileen every morning at 5:30 in a crontab to report on the previous days
+We run Eileen every morning at 5:00 in a crontab to report on the previous days
 time tracking compliance.
