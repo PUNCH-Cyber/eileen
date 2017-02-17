@@ -75,10 +75,12 @@ for day in dates:
         continue
     report += day + " " + days_of_week[dow] + "\n"
     for name in employees.keys():
-        if day in employees[name]:
-            report += '\t' + name + " - Great work! :grinning:\n"
-        else:
-            report += '\t' + name + " - Please complete your timecard! :rage:\n"
+        if name not in config['ignore']:
+            if day in employees[name]:
+                report += '\t' + name + " - Great work! :grinning:\n"
+            else:
+                report += '\t' + name + \
+                    " - Please complete your timecard! :rage:\n"
 
 print report
 
@@ -90,6 +92,7 @@ slack_payload = {
     }
 
 if report != "":
+    print "sending to slack...", slack_payload
     r = requests.post(config['slack_webhook_url'],
         data = json.dumps(slack_payload))
     print "slack response:", r.text

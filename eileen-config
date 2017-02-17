@@ -3,3 +3,4 @@ slack_webhook_url: https://hooks.slack.com/services/<your webhook url>
 username: Eileen
 emoji: ":robot_face:"
 channel: humanresources
+ignore: ["Person 1", "Person 2"]
