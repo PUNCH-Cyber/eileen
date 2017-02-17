@@ -1,5 +1,5 @@
 # Eileen
-Eileen is a Slack and Bigtime timecard enforcement bot.
+Eileen is a Slack and Bigtime timecard bot designed to encourage compliance.
 
 ![Eileen](example.png)
 
