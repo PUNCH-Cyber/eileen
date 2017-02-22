@@ -31,7 +31,8 @@ for logfilename in glob.glob(logdir + "timecard-data-*.json"):
     #print timecard_data
     employees = {}
     try:
-        for record in timecard_data['Data']:
+        tc_data = timecard_data['Data']
+        for record in tc_data:
             name = record[4]
             date = record[9]
             if name in employees.keys():
