@@ -49,7 +49,7 @@ for logfilename in glob.glob(logdir + "timecard-data-*.json"):
                 employee_days[name] += 1
                 if day in employees[name]:
                     employee_score[name] += 1
-    except ValueError:
+    except KeyError:
         print "Bad data in ", logfilename
         pass
 
