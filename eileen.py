@@ -41,7 +41,7 @@ def exit_on_fail(status_code, response_text):
         print "slack response:", r.text
         sys.exit(1)
 
-# establish session and get tokens
+# establish bigtime session and get tokens
 session_url = 'https://iq.bigtime.net/BigtimeData/api/v2/session'
 payload = {"UserId": credentials['UserId'], "Pwd": credentials['Pwd']}
 r = requests.post(session_url, params = payload)
