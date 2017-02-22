@@ -74,7 +74,6 @@ slack_payload = {
     "username": config['username']
     }
 
-'''
 if report != "":
     print "sending to slack...", slack_payload
     r = requests.post(config['slack_webhook_url'],
@@ -82,4 +81,3 @@ if report != "":
     print "slack response:", r.text
 else:
     print "Nothing to report"
-'''
