@@ -61,10 +61,10 @@ report += today_date + " " + days_of_week[report_dow] + "\n"
 employee_names_to_report = employee_days.keys()
 employee_names_to_report.sort()
 for employee in employee_names_to_report:
-    employee_score = (employee_score[employee] / \
+    employee_percent = (employee_score[employee] / \
         float(employee_days[employee])) * 100
-    employee_score = "{0:.2f}".format(employee_score)
-    report +=  employee + " " + str(employee_score) + "%\n"
+    employee_percent = "{0:.2f}".format(employee_percent)
+    report +=  employee + " " + str(employee_percent) + "%\n"
 print "Slack report: \n" + report
 
 slack_payload = {
