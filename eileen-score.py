@@ -30,24 +30,28 @@ for logfilename in glob.glob(logdir + "timecard-data-*.json"):
     print logdate
     #print timecard_data
     employees = {}
-    for record in timecard_data['Data']:
-        name = record[4]
-        date = record[9]
-        if name in employees.keys():
-            if date not in employees[name]:
-                employees[name].append(date)
-        else:
-            employees[name] = [date]
-    dayobj = datetime.strptime(logdate, "%Y-%m-%d") - timedelta(days=1)
-    day = dayobj.strftime("%Y-%m-%d")
-    dow = datetime.strptime(day, "%Y-%m-%d").weekday()
-    if dow > 4: # don't show results for weekend days
-        continue
-    for name in employees.keys():
-        if name not in config['ignore']:
-            employee_days[name] += 1
-            if day in employees[name]:
-                employee_score[name] += 1
+    try:
+        for record in timecard_data['Data']:
+            name = record[4]
+            date = record[9]
+            if name in employees.keys():
+                if date not in employees[name]:
+                    employees[name].append(date)
+            else:
+                employees[name] = [date]
+        dayobj = datetime.strptime(logdate, "%Y-%m-%d") - timedelta(days=1)
+        day = dayobj.strftime("%Y-%m-%d")
+        dow = datetime.strptime(day, "%Y-%m-%d").weekday()
+        if dow > 4: # don't show results for weekend days
+            continue
+        for name in employees.keys():
+            if name not in config['ignore']:
+                employee_days[name] += 1
+                if day in employees[name]:
+                    employee_score[name] += 1
+    except ValueError:
+        print "Bad data in ", logfilename
+        pass
 
 report = ""
 report_dow = datetime.strptime(today_date, "%Y-%m-%d").weekday()
