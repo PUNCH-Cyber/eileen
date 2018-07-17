@@ -132,18 +132,19 @@ if __name__ == '__main__':
 
         for entry in response['Data']:
             age = entry[1]
-            project = entry[3]
-            invoice_date = entry[5]
-            invoice_number = entry[7]
-            amount = entry[9]
+            project = entry[2]
+            invoice_date = entry[4]
+            invoice_number = entry[6]
+            amount = entry[8]
+            balance = entry[10]
 
-            if age < 0:
+            if (age < 365) and balance:
                 if age not in aged_projects:
                     aged_projects[age] = []
-                aged_projects[age].append([project, invoice_date, invoice_number, '$' + str(amount)])
+                aged_projects[age].append([project, invoice_date, invoice_number, '$' + str(balance)])
 
         for key in sorted(aged_projects.keys()):
-            report += '\nProjects aged @ {} days\n'.format(key)
+            report += '\nProjects aged @ {} days with an outstanding balance\n'.format(key)
             for entry in aged_projects[key]:
                 report += '\t {}\n'.format(' - '.join(entry))
 
