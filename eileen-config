@@ -1,3 +1,5 @@
+aging_report_url: https://iq.bigtime.net/BigtimeData/api/v2/report/data/<your aging detail report number>
+personnel_roster_url: https://iq.bigtime.net/BigtimeData/api/v2/report/data/<your personnel roster report number>
 timesheet_report_url: https://iq.bigtime.net/BigtimeData/api/v2/report/data/<your timecard detail report number>
 slack_webhook_url: https://hooks.slack.com/services/<your webhook url>
 username: Eileen
