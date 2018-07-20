@@ -6,3 +6,5 @@ username: Eileen
 emoji: ":robot_face:"
 channel: humanresources
 ignore: ["Person 1", "Person 2"]
+alert_table: {"Person 1": "Person 1 Email",
+              "Person 2": "Person 2 Email"}

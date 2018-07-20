@@ -6,6 +6,11 @@ import json
 import sys
 from datetime import datetime, timedelta
 
+# Email dependencies
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 def create_bigtime_session(user, password):
     """
@@ -37,6 +42,21 @@ def POST_slack(webhook_url, content):
     r = requests.post(webhook_url, data = json.dumps(content))
     print("Slack response:", r.text)
 
+def send_email(sender, recipients, subject, body, password):
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(sender, password)
+
+    for recipient in recipients:
+        msg = MIMEMultipart()
+        msg['From'] = sender
+        msg['To'] = recipient
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+        text = msg.as_string()
+        server.sendmail(sender, recipient, text)
+
+    server.quit()
 
 if __name__ == '__main__':
     date = datetime.now().strftime("%Y-%m-%d")
@@ -106,6 +126,8 @@ if __name__ == '__main__':
             employees[name] = [date]
 
     report = ""
+    email_recipients = []
+
     for day in dates:
         dow = datetime.strptime(day, "%Y-%m-%d").weekday()
         if dow > 4: # don't show results for weekend days
@@ -118,6 +140,9 @@ if __name__ == '__main__':
                 else:
                     report += '\t' + name + \
                         " - Please complete your timecard! :rage:\n"
+                    
+                    if name in config['alert_table']:
+                        email_recipients.append(config['alert_table'][name])
 
     # Gather A/R aging detail report
     aging_report_url = config.get('aging_report_url', None)
@@ -150,6 +175,7 @@ if __name__ == '__main__':
 
     print(report)
 
+    # Send summary to slack
     success_payload = {
         "text":report,
         "channel": config['channel'],
@@ -161,5 +187,10 @@ if __name__ == '__main__':
         POST_slack(config['slack_webhook_url'], success_payload)
     else:
         print("Nothing to report")
+
+    # Send out automated email alerts
+    subject = "REMINDER: Timecard was not filled out"
+    body = "It appears your timecard was not filled out on {}. Please do so at your earliest convenience".format(dates[0]) 
+    send_email(credentials['email'], email_recipients, subject, body, credentials['email_password'])
 
 # EOF
