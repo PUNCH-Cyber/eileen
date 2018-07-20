@@ -189,6 +189,7 @@ if __name__ == '__main__':
         print("Nothing to report")
 
     # Send out automated email alerts
+    print("Sending email alerts to the following: {}".format(', '.join(email_recipients)))
     subject = "REMINDER: Timecard was not filled out"
     body = "It appears your timecard was not filled out on {}. Please do so at your earliest convenience".format(dates[0]) 
     send_email(credentials['email'], email_recipients, subject, body, credentials['email_password'])
